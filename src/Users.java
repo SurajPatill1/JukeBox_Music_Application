@@ -50,47 +50,53 @@ public class Users {
     }
 
     public int checkUser() throws SQLException {
-        ArrayList<String> listbyuser = new ArrayList<>();
-        con = ConnectionClass.getConnection();
-        Scanner sc = new Scanner(System.in);
-        int num = 0;
-        System.out.println("----------------------------------------------------------------");
-        System.out.println("****************** Welcome To Your JukeBox *********************");
-        System.out.println("----------------------------------------------------------------");
-        do {
-            //try {
-            System.out.println("Enter  1.For New User");
-            System.out.println("       2.For Existing User");
-            int choice = sc.nextInt();
-            if (choice == 1) {
-                System.out.println("Enter Your Name");
-                String name = sc.next();
-                System.out.println("Create Your Min. 8 Digit Password");
-                String password = sc.next();
-                st = con.createStatement();
-                if (password.length() >= 8) {
-                    //int x = st.executeUpdate("insert into users(username,password) values('" + name + "','" + password + "')");
-                    rs = st.executeQuery("select * from users where username='" + name + "'");
-                    while (rs.next()) {
-                        listbyuser.add(String.valueOf(new Users(rs.getInt(1), rs.getString(2), rs.getString(3))));
-                        System.out.println(listbyuser);
-                    }
-                    if (listbyuser.contains(name)) {
-                        System.out.println("Username Already Exits");
-                        System.out.println("Try with another Username");
+        ConnectionClass cc=new ConnectionClass();
+        ArrayList<Users> listbyuser = new ArrayList<>();
+        try {
+            con = ConnectionClass.getConnection();
+            Scanner sc = new Scanner(System.in);
+            int num = 0;
+            System.out.println("----------------------------------------------------------------");
+            System.out.println("****************** Welcome To Your JukeBox *********************");
+            System.out.println("----------------------------------------------------------------");
+            do {
+                System.out.println("Enter  1.For New User");
+                System.out.println("       2.For Existing User");
+                int choice = sc.nextInt();
+                if (choice == 1) {
+                    System.out.println("Enter Your Name");
+                    String name = sc.next();
+                    System.out.println("Create Your Min. 8 Digit Password");
+                    String password = sc.next();
+                    st = con.createStatement();
+                    if (password.length() >= 8) {
+                        rs = st.executeQuery("select * from users where username='" + name + "'");
+                        while (rs.next()) {
+                            listbyuser.add(new Users(rs.getInt(1), rs.getString(2), rs.getString(3)));
+                        }
+                        if (listbyuser.size() > 0) {
+                            for (Users us : listbyuser) {
+                                if (us.getUsername().equals(name)) {
+                                    System.out.println("Username Already Exits");
+                                    System.out.println("Try with another Username");
+                                }
+
+                            }
+
+                        } else {
+                            int x = st.executeUpdate("insert into users(username,password) values('" + name + "','" + password + "')");
+                            System.out.println();
+                            System.out.println("Account Created Successfully");
+                            System.out.println("Thanks! for Signing up.");
+                            System.out.println();
+                            System.out.println("*************** Welcome to Jukebox ***************");
+                            return 1;
+                        }
+
                     } else {
-                        System.out.println("hloo");
-                        int x = st.executeUpdate("insert into users(username,password) values('" + name + "','" + password + "')");
-                        System.out.println();
-                        System.out.println("Account Created Successfully");
-                        System.out.println("Thanks! for Signing up.");
-                        System.out.println();
-                        System.out.println("*************** Welcome to Jukebox ***************");
-                        return 1;
+                        System.out.println("Password Needs didn't Meet");
                     }
-                    } else {
-                        System.out.println("Password Needs didn't meet");
-                    }
+
                 } else if (choice == 2) {
                     System.out.println("Enter Your Name");
                     String uname = sc.next();
@@ -115,10 +121,6 @@ public class Users {
                 } else {
                     System.out.println("Invalid Input");
                 }
-//        }
-//            catch (Exception e){
-//                System.out.println("WARNING ⚠️Enter only Mentioned Entries ");
-//            }
                 System.out.println("Do you want to Continue Enter 1. Or Enter 0 For Quiting");
                 Scanner sc1 = new Scanner(System.in);
                 int entry = sc1.nextInt();
@@ -131,10 +133,14 @@ public class Users {
                 }
                 num = sc.nextInt();
             }
-            while (num != 0) ;
-            System.out.println("------- Thanks For Visiting -------");
-            return 0;
+            while (num != 0);
+            System.out.println("-------* Thanks For Visiting *-------");
+
+        } catch (Exception e) {
+            System.out.println("WARNING ⚠️Enter only Mentioned Entries ");
         }
+        return 0;
+    }
 
     @Override
     public String toString() {

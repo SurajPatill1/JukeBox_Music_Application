@@ -20,13 +20,14 @@ public class ConnectionClass {
     }
 
 
+
     public static void main(String[] args) throws SQLException, UnsupportedAudioFileException, LineUnavailableException, IOException {
         ConnectionClass cc = new ConnectionClass();
         Users users = new Users();
         Songs s = new Songs();
         Podcast pd = new Podcast();
         Playlist pl = new Playlist();
-        //try {
+        try {
             Scanner scan = new Scanner(System.in);
             int result = users.checkUser();
             int num = 0;
@@ -38,7 +39,7 @@ public class ConnectionClass {
                     System.out.println("      4.Search by Artist");
                     System.out.println("      5.Search by Genre");
                     System.out.println("      6.Create Playlist");
-                    System.out.println("      7.Display Playlist");
+                    System.out.println("      7.Existing Playlists");
                     System.out.println("      0.For Quit");
                     int choise = scan.nextInt();
                     switch (choise) {
@@ -82,7 +83,7 @@ public class ConnectionClass {
                             pl.createPlaylist();
                             break;
                         case 7:
-                            pl.displayplaylist();
+                            pl.existingplaylist();
                             break;
                         case 0:
                             break;
@@ -93,15 +94,13 @@ public class ConnectionClass {
                 }
                 System.out.println("Do you want to Continue Enter 1. Or Enter 0 For Quiting");
                 num = scan.nextInt();
-                if (num == 1) {
-
-                }
             } while (num != 0);
             System.out.println("-------Thanks For Visiting-------");
-//        } catch (Exception ex) {
-//            System.out.println("Invalid Input");
-//            System.out.println("Try Again");
-//        }
+        } catch (Exception ex) {
+            System.out.println("Invalid Input");
+            System.out.println("Try Again");
+        }
     }
+
 }
 

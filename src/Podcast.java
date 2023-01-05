@@ -87,16 +87,15 @@ public class Podcast {
         this.pod = pod;
     }
 
-    public List<Podcast> podcastDisplay() throws SQLException {
-        List<Podcast> listbypodcast=new ArrayList<>();
+    public void podcastDisplay() throws SQLException {
         try {
             Scanner scan = new Scanner(System.in);
             con = ConnectionClass.getConnection();
             st = con.createStatement();
             rs = st.executeQuery("select * from podcast");
-            System.out.println("************************************************************************************************************************************************");
+            System.out.println("******************************************************************************************************************************************************************");
             System.out.format("%-15s %-25s %30s %30s %32s", "Podcast ID", "Podcast Name", "Episode Name", "Episode ID", "Duration \n");
-            System.out.println("************************************************************************************************************************************************");
+            System.out.println("******************************************************************************************************************************************************************");
             while (rs.next()) {
                 System.out.format("%-15s %-25s %30s %30s %30s\n", rs.getInt(1), rs.getString(2), rs.getString(3), rs.getInt(4), rs.getString(5));
             }
@@ -104,21 +103,31 @@ public class Podcast {
             System.out.println("Enter the Podcast Episode ID");
             String pid = scan.next();
             ResultSet rs1 = st.executeQuery("select * from podcast where poscastepid='" + pid + "'");
-            System.out.println("************************************************************************************************************");
+            System.out.println("*********************************************************************************************************");
             System.out.format(" %-10s %10s %30s \n", "Episode ID", "Episode Name", "Episode Path");
-            System.out.println("************************************************************************************************************");
+            System.out.println("*********************************************************************************************************");
             while (rs1.next()) {
                 System.out.format(" %-10s %10s %30s \n", rs1.getInt(1), rs1.getString(3), rs1.getString(6));
-                //System.out.println(new Podcast(rs1.getInt(1),rs1.getString(2),rs1.getString(3),rs1.getInt(4),rs1.getString(5),rs1.getString(6),rs1.getInt(7)));
+            }
+            System.out.println("Enter 1.For continue 0.For Quit");
+            int num=scan.nextInt();
+            switch (num){
+                case 1:{
+                    podcastDisplay();
+                }
+                case 0:{
+                    break;
+                }
+                default:{
+                    System.out.println("Invalid Input");
+                }
             }
         }catch (Exception ex){
             System.out.println("Invalid Input");
             System.out.println("Try Again");
         }
-        return listbypodcast;
     }
-    public List<Podcast> podcastname() throws SQLException {
-        List<Podcast> listbypodcastname=new ArrayList<>();
+    public void podcastname() throws SQLException {
         try {
             Scanner scan = new Scanner(System.in);
             con = ConnectionClass.getConnection();
@@ -133,21 +142,28 @@ public class Podcast {
             String pname = scan.next();
             System.out.println("--------- Available Channels ---------");
             ResultSet rs1 = st.executeQuery("select * from podcast where podcastname='" + pname + "'");
-            System.out.println("*********************************************************************************");
+            System.out.println("****************************************************************************************************************************************************");
             System.out.format(" %-10s %20s %40s %55s \n", "Podcast ID", "Podcast Name", "Episode Name", "Episode Path");
-            System.out.println("*********************************************************************************");
+            System.out.println("****************************************************************************************************************************************************");
             while (rs1.next()) {
                 System.out.format(" %-10s %20s %40s %55s \n", rs1.getInt(1), rs1.getString(2), rs1.getString(3), rs1.getString(6));
-                //System.out.println(new Podcast(rs1.getInt(1),rs1.getString(2),rs1.getString(3),rs1.getInt(4),rs1.getString(5),rs1.getString(6),rs1.getInt(7)));
+            }
+            System.out.println("Enter 1.For continue 0.For Quit");
+            int num=scan.nextInt();
+            switch (num){
+                case 1:{
+                    podcastname();
+                }
+                case 0:{
+                    break;
+                }
             }
         }catch (Exception ex){
             System.out.println("Invalid Input");
             System.out.println("Try Again");
         }
-        return listbypodcastname;
     }
-    public List<Podcast> podcastepname() throws SQLException {
-        List<Podcast> listbypodcastepname=new ArrayList<>();
+    public void podcastepname() throws SQLException {
         try {
             Scanner scan = new Scanner(System.in);
             con = ConnectionClass.getConnection();
@@ -161,18 +177,27 @@ public class Podcast {
             System.out.println("Enter the Episode Name");
             String ename = scan.next();
             ResultSet rs1 = st.executeQuery("select * from podcast where podcastepname='" + ename + "'");
-            System.out.println("*************************************************************");
+            System.out.println("**********************************************************************************************************");
             System.out.format(" %-10s %20s %30s \n", "Podcast ID", "Episode Name", "Episode Path");
-            System.out.println("*************************************************************");
+            System.out.println("**********************************************************************************************************");
             while (rs1.next()) {
                 System.out.format(" %-10s %20s %30s \n", rs1.getInt(1), rs1.getString(3), rs1.getString(6));
-                //System.out.println(new Podcast(rs1.getInt(1),rs1.getString(2),rs1.getString(3),rs1.getInt(4),rs1.getString(5),rs1.getString(6),rs1.getInt(7)));
+            }
+            System.out.println("Enter 1.For continue 0.For Quit");
+            int num=scan.nextInt();
+            switch (num){
+                case 1:{
+                    podcastepname();
+                }
+                case 0:{
+                    break;
+                }
+
             }
         }catch (Exception ex){
             System.out.println("Invalid Input");
             System.out.println("Try Again");
         }
-        return listbypodcastepname;
     }
 
     @Override

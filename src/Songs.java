@@ -150,7 +150,7 @@ public class Songs {
                 System.out.format(" %-10s %10s %20s \n", rs1.getInt(1), rs1.getString(5), rs1.getString(2));
                 listbygenre.add(new Songs(rs1.getInt(1), rs1.getString(2), rs1.getString(3), rs1.getString(4), rs1.getString(5), rs1.getString(6), rs1.getString(7)));
             }
-            System.out.println(listbygenre);
+            System.out.println();
             System.out.println("Enter the Song ID");
             int sid = scan.nextInt();
             musicplay(listbygenre, sid);
@@ -253,6 +253,11 @@ public class Songs {
                     case 2: {
                         clip.stop();
                         time = clip.getMicrosecondPosition();
+                        long total= clip.getMicrosecondLength()/1000000;
+                        long micro=clip.getMicrosecondPosition()/1000000;
+                        System.out.println("played in seconds : "+micro);
+                        System.out.println("remaining time for this song : "+(total-micro)+" seconds");
+                        System.out.println("Duration Of Song : "+(total)+" seconds");
                         break;
                     }
                     case 3: {
